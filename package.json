@@ -14,7 +14,7 @@
     "eject": "react-scripts eject",
     "prepush": "npm test-CI",
     "build": "react-scripts build -- --production",
-    "serve": "npm run test-CI && npm run build && bx cf push"
+    "deploy": "npm run test-CI && npm run build && bx cf push"
   },
   "devDependencies": {
     "enzyme": "3.3.0",
