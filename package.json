@@ -1,0 +1,27 @@
+{
+  "name": "clearscore-fed-test",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "moment": "^2.22.2",
+    "react": "16.4.0",
+    "react-dom": "16.4.0",
+    "react-scripts": "1.1.4",
+    "styled-components": "^3.4.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test --env=jsdom",
+    "test-CI": "CI=true react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "prepush": "yarn test-CI",
+    "build": "react-scripts build -- --production",
+    "deploy": "yarn test-CI && yarn build && bx cf push"
+  },
+  "devDependencies": {
+    "enzyme": "3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
+    "husky": "^0.14.3",
+    "react-test-renderer": "16.4.0"
+  }
+}

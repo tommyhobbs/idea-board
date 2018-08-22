@@ -1,0 +1,11 @@
+applications:
+- path: ./build
+  buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
+  memory: 64M
+  instances: 1
+  domain: mybluemix.net
+  name: idea-board
+  host: idea-board
+  stack: cflinuxfs2
+  env:
+    FORCE_HTTPS: true
