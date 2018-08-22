@@ -1,38 +1,36 @@
-![ClearScore](https://github.com/ClearScore/tech-screen/blob/master/assets/clearscore.png)
+# Idea Board (ClearScore FED Test)
+Currently hosted on https://idea-board.mybluemix.net/
 
-# Tech-screen
+## Requirements
 
-This repo contains multiple apps.  The concept is to enable developers to pick and choose which tech problem(s) they would like to solve.
+To run this app locally [Yarn](https://yarnpkg.com/en/docs/install#mac-stable) is required.
 
-But first, a little bit about us...
+## Development instructions
 
-## About ClearScore
+```bash
+yarn install
+yarn start
+```
+Navigate to http://localhost:3000.
 
-At ClearScore we are not limited to the technology stack we can use. Our systems evolve quickly and choosing the right tools for the job is an important factor within our development cycle.
+## Test
 
-We are currently working with...
- * ES6 and ES7 throughout the codebase
- * React with Redux (Some legacy apps used Angular, but this is being phased out)
- * Isomorphic / Universal SPA
- * PostCSS + CSS-modules for styling (legacy apps use SASS and BEM)
- * MEN (Mongo, Express, Node) stack websites
- * We build using the Webpack module bundler and Lerna package manager
- * Jest + Enzyme for Unit testing
- * We currently support the latest 2 versions of Edge, Chrome, Firefox and Safari (plus ie11)
+- Test watch
+  ```bash
+  yarn test
+  ```
+- One time test
+  ```bash
+  yarn test-CI
+  ```
 
-## What we're looking for
+## Deployment
 
- * A stylish solution with unit test coverage
- * Clean, concise code
- * A detailed README
- * A live site we can see (if possible)
+This app is currently deployed to IBM Cloud via a [Cloud Foundry Staticfile Buildpack](https://github.com/cloudfoundry/staticfile-buildpack).
 
-## Apps
+To deploy, the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/index.html#overview) needs to be install to login as an authorized user.
 
- > Each app contains 1 (or more) tech challenge(s). Please pick and choose one or more to complete.
-
- * [Carousel](/carousel) \[4 hours] \[Front-end] \[React]
-   * A Front-end focused app which requires a new carousel
- * [Idea Board](/idea-board) \[2-3 hours] \[Front-end] \[React]
-   * Idea board app where you can create, update, delete and sort items.
-
+```bash
+bx login
+yarn deploy
+```

@@ -10,11 +10,16 @@
   "scripts": {
     "start": "react-scripts start",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test-CI": "CI=true react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "prepush": "npm test-CI",
+    "build": "react-scripts build -- --production",
+    "serve": "npm run test-CI && npm run build && bx cf push"
   },
   "devDependencies": {
     "enzyme": "3.3.0",
     "enzyme-adapter-react-16": "1.1.1",
+    "husky": "^0.14.3",
     "react-test-renderer": "16.4.0"
   }
 }
