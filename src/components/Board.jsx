@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Idea from '../idea/Idea';
+import Idea from '../components/Idea';
 
 const Frame = styled.div`
   display: grid;
@@ -12,7 +12,7 @@ const Frame = styled.div`
   grid-template-columns: 1fr;
   justify-content: center;
   margin: 20px;
-  border: 10px outset #C19A6B;
+  border: 10px outset #c19a6b;
 `;
 
 const Title = styled.h1`
@@ -25,7 +25,7 @@ const Title = styled.h1`
   font-weight: bold;
   font-size: 50px;
   text-align: center;
-  box-shadow: 1px 1px 1px rgba(0,0,0,0.25);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
   border: 1px solid #bbb;
   transform: rotate(-2deg);
 `;
@@ -48,16 +48,24 @@ const Footer = styled.div`
   padding: 20px;
 `;
 
-const Board = (props) => {
+const Board = props => {
   const { ideas } = props;
   return (
     <Frame>
       <Title>Idea Board</Title>
       <IdeaArea>
-        {ideas.map(idea => <Idea {...idea} />)}
+        {ideas.map(idea => (
+          <Idea {...idea} />
+        ))}
       </IdeaArea>
       <Footer>
-        <p>A 4 hour experiment <span role='img' aria-label='timer emoji'>⏲️</span> by Tom Hobbs</p>
+        <p>
+          A 4 hour experiment{' '}
+          <span role="img" aria-label="timer emoji">
+            ⏲️
+          </span>{' '}
+          by Tom Hobbs
+        </p>
       </Footer>
     </Frame>
   );
