@@ -19,6 +19,7 @@ const StyledIdea = styled.div`
 
 const Idea = props => {
   const {
+    autoFocus,
     handleChange,
     onDelete,
     idea: { id, timestamp, title, blurb }
@@ -28,7 +29,7 @@ const Idea = props => {
     <StyledIdea key={id}>
       <Title>
         <textarea
-          autoFocus
+          autoFocus={autoFocus}
           rows="1"
           maxLength="12"
           value={title}

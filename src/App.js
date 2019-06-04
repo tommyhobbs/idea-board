@@ -55,12 +55,15 @@ class App extends React.Component {
   state = { ideas: [] };
 
   componentDidMount() {
-    if (localStorage.getItem('ideas') === null) {
+    if (localStorage.getItem('ideas')) {
+      this.setState({
+        ideas: JSON.parse(localStorage.getItem('ideas'))
+      });
+    } else {
       this.setState({ ideas: [] }, () => {
         localStorage.setItem('ideas', []);
       });
     }
-    this.setState({ ideas: JSON.parse(localStorage.getItem('ideas')) });
   }
 
   handleChange = (type, value, id) => {
@@ -85,8 +88,9 @@ class App extends React.Component {
   };
 
   onCreate = () => {
+    const id = moment();
     const newIdea = {
-      id: this.state.ideas.length,
+      id,
       timestamp: moment().format('ddd Do, h:mm:sA'),
       title: '',
       blurb: ''
@@ -109,7 +113,8 @@ class App extends React.Component {
           {this.state.ideas &&
             this.state.ideas.map((idea, i) => (
               <Idea
-                key={i + idea.title}
+                autoFocus={i === 0 ? true : false}
+                key={idea.id}
                 idea={idea}
                 handleChange={this.handleChange}
                 onDelete={this.onDelete}
