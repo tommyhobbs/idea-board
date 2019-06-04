@@ -1,12 +1,12 @@
 {
-  "name": "clearscore-fed-test",
+  "name": "hobbs-idea-board",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "moment": "^2.22.2",
-    "react": "16.4.0",
-    "react-dom": "16.4.0",
-    "react-scripts": "1.1.4",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.0.1",
     "styled-components": "^3.4.4"
   },
   "scripts": {
@@ -18,5 +18,17 @@
     "enzyme": "3.3.0",
     "enzyme-adapter-react-16": "1.1.1",
     "react-test-renderer": "16.4.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

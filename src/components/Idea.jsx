@@ -18,21 +18,34 @@ const StyledIdea = styled.div`
 `;
 
 const Idea = props => {
-  const { timestamp, title, blurb } = props.idea;
+  const {
+    handleChange,
+    onDelete,
+    idea: { id, timestamp, title, blurb }
+  } = props;
+
   return (
-    <StyledIdea>
+    <StyledIdea key={id}>
       <Title>
-        <textarea rows="1" maxLength="10" defaultValue={title} />
+        <textarea
+          autoFocus
+          rows="1"
+          maxLength="12"
+          value={title}
+          onChange={e => handleChange('title', e.target.value, id)}
+        />
         <h3>{timestamp}</h3>
       </Title>
-      <Bin onClick={() => props.onDelete(title)}>
+      <Bin onClick={onDelete}>
         <span role="img" aria-label="bin emoji">
           🗑️
         </span>
       </Bin>
-      <Blurb type="text" maxLength="140">
-        {blurb}
-      </Blurb>
+      <Blurb
+        maxLength="140"
+        value={blurb}
+        onChange={e => handleChange('blurb', e.target.value, id)}
+      />
     </StyledIdea>
   );
 };

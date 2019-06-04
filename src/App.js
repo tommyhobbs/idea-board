@@ -49,7 +49,6 @@ const Footer = styled.div`
   justify-self: end;
   align-self: flex-end;
   font-family: Kalam;
-  color: hotpink;
   padding: 20px;
 `;
 
@@ -58,16 +57,31 @@ class App extends React.Component {
     ideas: defaultIdeas
   };
 
-  onDelete = idea => {
-    console.log(idea.title);
+  handleChange = (type, value, id) => {
+    let updatedIdeas = [...this.state.ideas];
+    const ideaIndex = this.state.ideas.findIndex(idea => idea.id === id);
+    if (type === 'title') {
+      updatedIdeas[ideaIndex].title = value;
+    } else if (type === 'blurb') {
+      updatedIdeas[ideaIndex].blurb = value;
+    } else {
+      return;
+    }
     this.setState({
-      ideas: this.state.ideas.filter(i => i.title !== idea.title)
+      ideas: [...updatedIdeas]
+    });
+  };
+
+  onDelete = idea => {
+    this.setState({
+      ideas: this.state.ideas.filter(i => i.id !== idea.id)
     });
   };
 
   onCreate = () => {
     const newIdea = {
-      timestamp: moment().format('ddd, h:m:sA'),
+      id: this.state.ideas.length,
+      timestamp: moment().format('ddd Do, h:mm:sA'),
       title: '',
       blurb: ''
     };
@@ -91,6 +105,7 @@ class App extends React.Component {
             <Idea
               key={i + idea.title}
               idea={idea}
+              handleChange={this.handleChange}
               onDelete={() => this.onDelete(idea)}
             />
           ))}
