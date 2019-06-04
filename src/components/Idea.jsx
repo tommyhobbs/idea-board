@@ -36,7 +36,7 @@ const Idea = props => {
         />
         <h3>{timestamp}</h3>
       </Title>
-      <Bin onClick={onDelete}>
+      <Bin onClick={() => onDelete(id)}>
         <span role="img" aria-label="bin emoji">
           🗑️
         </span>

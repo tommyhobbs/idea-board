@@ -4,7 +4,6 @@ import moment from 'moment';
 
 import Idea from './components/Idea';
 import Add from './components/Add';
-import defaultIdeas from './defaultIdeas';
 
 const Frame = styled.div`
   display: grid;
@@ -53,9 +52,16 @@ const Footer = styled.div`
 `;
 
 class App extends React.Component {
-  state = {
-    ideas: defaultIdeas
-  };
+  state = { ideas: [] };
+
+  componentDidMount() {
+    if (localStorage.getItem('ideas') === null) {
+      this.setState({ ideas: [] }, () => {
+        localStorage.setItem('ideas', []);
+      });
+    }
+    this.setState({ ideas: JSON.parse(localStorage.getItem('ideas')) });
+  }
 
   handleChange = (type, value, id) => {
     let updatedIdeas = [...this.state.ideas];
@@ -67,14 +73,14 @@ class App extends React.Component {
     } else {
       return;
     }
-    this.setState({
-      ideas: [...updatedIdeas]
+    this.setState({ ideas: updatedIdeas }, () => {
+      localStorage.setItem('ideas', JSON.stringify(this.state.ideas));
     });
   };
 
-  onDelete = idea => {
-    this.setState({
-      ideas: this.state.ideas.filter(i => i.id !== idea.id)
+  onDelete = id => {
+    this.setState({ ideas: this.state.ideas.filter(i => i.id !== id) }, () => {
+      localStorage.setItem('ideas', JSON.stringify(this.state.ideas));
     });
   };
 
@@ -85,9 +91,8 @@ class App extends React.Component {
       title: '',
       blurb: ''
     };
-    this.setState({
-      ideas: [newIdea, ...this.state.ideas]
-    });
+    this.setState({ ideas: [newIdea, ...this.state.ideas] });
+    localStorage.setItem('ideas', JSON.stringify(this.state.ideas));
   };
 
   render() {
@@ -101,14 +106,15 @@ class App extends React.Component {
           </span>
         </Add>
         <IdeaArea>
-          {this.state.ideas.map((idea, i) => (
-            <Idea
-              key={i + idea.title}
-              idea={idea}
-              handleChange={this.handleChange}
-              onDelete={() => this.onDelete(idea)}
-            />
-          ))}
+          {this.state.ideas &&
+            this.state.ideas.map((idea, i) => (
+              <Idea
+                key={i + idea.title}
+                idea={idea}
+                handleChange={this.handleChange}
+                onDelete={this.onDelete}
+              />
+            ))}
         </IdeaArea>
         <Footer>
           <p>
