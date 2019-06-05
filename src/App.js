@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 
@@ -51,24 +51,24 @@ const Footer = styled.div`
   padding: 20px;
 `;
 
-class App extends React.Component {
-  state = { ideas: [] };
+const App = () => {
+  const initialIdeas = JSON.parse(localStorage.getItem('ideas')) || [];
+  const [ideas, setIdeas] = useState(initialIdeas);
 
-  componentDidMount() {
-    if (localStorage.getItem('ideas')) {
-      this.setState({
-        ideas: JSON.parse(localStorage.getItem('ideas'))
-      });
-    } else {
-      this.setState({ ideas: [] }, () => {
-        localStorage.setItem('ideas', []);
-      });
-    }
-  }
+  useEffect(
+    initialIdeas => {
+      if (initialIdeas) {
+        localStorage.setItem('ideas', JSON.stringify(initialIdeas));
+      } else {
+        localStorage.setItem('ideas', JSON.stringify(ideas));
+      }
+    },
+    [ideas]
+  );
 
-  handleChange = (type, value, id) => {
-    let updatedIdeas = [...this.state.ideas];
-    const ideaIndex = this.state.ideas.findIndex(idea => idea.id === id);
+  const handleChange = (type, value, id) => {
+    let updatedIdeas = [...ideas];
+    const ideaIndex = ideas.findIndex(idea => idea.id === id);
     if (type === 'title') {
       updatedIdeas[ideaIndex].title = value;
     } else if (type === 'blurb') {
@@ -76,18 +76,14 @@ class App extends React.Component {
     } else {
       return;
     }
-    this.setState({ ideas: updatedIdeas }, () => {
-      localStorage.setItem('ideas', JSON.stringify(this.state.ideas));
-    });
+    setIdeas(updatedIdeas);
   };
 
-  onDelete = id => {
-    this.setState({ ideas: this.state.ideas.filter(i => i.id !== id) }, () => {
-      localStorage.setItem('ideas', JSON.stringify(this.state.ideas));
-    });
+  const onDelete = id => {
+    setIdeas(ideas.filter(i => i.id !== id));
   };
 
-  onCreate = () => {
+  const onCreate = () => {
     const id = moment();
     const newIdea = {
       id,
@@ -95,41 +91,38 @@ class App extends React.Component {
       title: '',
       blurb: ''
     };
-    this.setState({ ideas: [newIdea, ...this.state.ideas] });
-    localStorage.setItem('ideas', JSON.stringify(this.state.ideas));
+    setIdeas([newIdea, ...ideas]);
   };
 
-  render() {
-    return (
-      <Frame>
-        <Title>Idea Board</Title>
-        <Add onClick={this.onCreate}>
-          Create
-          <span role="img" aria-label="create emoji">
-            📝
-          </span>
-        </Add>
-        <IdeaArea>
-          {this.state.ideas &&
-            this.state.ideas.map((idea, i) => (
-              <Idea
-                autoFocus={i === 0 ? true : false}
-                key={idea.id}
-                idea={idea}
-                handleChange={this.handleChange}
-                onDelete={this.onDelete}
-              />
-            ))}
-        </IdeaArea>
-        <Footer>
-          <p>
-            created by{' '}
-            <a href="https://www.linkedin.com/in/tommyhobbs/">Tom Hobbs</a>
-          </p>
-        </Footer>
-      </Frame>
-    );
-  }
-}
+  return (
+    <Frame>
+      <Title>Idea Board</Title>
+      <Add onClick={onCreate}>
+        Create
+        <span role="img" aria-label="create emoji">
+          📝
+        </span>
+      </Add>
+      <IdeaArea>
+        {ideas &&
+          ideas.map((idea, i) => (
+            <Idea
+              autoFocus={i === 0 ? true : false}
+              key={idea.id}
+              idea={idea}
+              handleChange={handleChange}
+              onDelete={onDelete}
+            />
+          ))}
+      </IdeaArea>
+      <Footer>
+        <p>
+          created by{' '}
+          <a href="https://www.linkedin.com/in/tommyhobbs/">Tom Hobbs</a>
+        </p>
+      </Footer>
+    </Frame>
+  );
+};
 
 export default App;
