@@ -96,7 +96,7 @@ const App = () => {
 
   return (
     <Frame>
-      <Title>Idea Board</Title>
+      <Title>Ideas Board</Title>
       <Add onClick={onCreate}>
         Create
         <span role="img" aria-label="create emoji">
